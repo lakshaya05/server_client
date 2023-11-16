@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Simple Chat Application</title>
+ <style>
+ body {
+ font-family: Arial, sans-serif;
+ text-align: center;
+ margin: 50px;
+ background-color: #222;
+ color: #fff;
+ }
+
+ #chat-form {
+ display: flex;
+ justify-content: center;
+ }
+
+ #message-input {
+ width: 70%;
+ padding: 10px;
+ font-size: 16px;
+ background-color: #333;
+ color: #fff;
+ border: 1px solid #555;
+ }
+ #send-button {
+ padding: 10px 20px;
+ font-size: 16px;
+ background-color: #007bff;
+ color: #fff;
+ border: none;
+ cursor: pointer;
+ }
+
+ #server-button {
+ margin-left: 10px;
+ padding: 10px 20px;
+ font-size: 16px;
+ background-color: #ff6600;
+ color: #fff;
+ border: none;
+ cursor: pointer;
+ }
+
+ #chat-box {
+ margin-top: 30px;
+ text-align: left;
+ max-width: 400px;
+ margin-left: auto;
+ margin-right: auto;
+ background-color: #444;
+ color: #fff;
+ padding: 10px;
+ border: 1px solid #555;
+ }
+ </style>
+
+</head>
+<body>
+ <h1>Simple Chat Application</h1>
+<div id="chat-box"></div>
+ <form id="chat-form">
+ <input type="text" id="message-input" placeholder="Type your message...">
+ <button type="submit" id="send-button">Send</button>
+ <button type="button" id="server-button">Open Server Page</button>
+ </form>
+ <script>
+ document.getElementById('chat-form').addEventListener('submit', function (e) {
+ e.preventDefault();
+ var messageInput = document.getElementById('message-input');
+ var message = messageInput.value.trim();
+ if (message !== '') {
+ // Display the message in the chat box
+ var chatBox = document.getElementById('chat-box');
+ var messageElement = document.createElement('div');
+ messageElement.textContent = 'You: ' + message;
+ chatBox.appendChild(messageElement);
+ // Clear the input field
+ messageInput.value = '';
+ // Send the message to the server using JavaScript (AJAX)
+ var xhr = new XMLHttpRequest();
+ xhr.open('POST', '/send_message', true);
+ xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+ xhr.send(JSON.stringify({ message: message }));
+ }
+ });
+ document.getElementById('server-button').addEventListener('click', function () {
+window.location.href = '/server';
+ });
+ </script>
+</body>
+</html>
